@@ -23,16 +23,19 @@ bool ged_filtering( const unsigned p, const unsigned q )
 	auto r = gdb[p].vmap;
 	auto s = gdb[q].vmap;
 	
+	if( abs(int(r.size()) - int(s.size()) ) > tau ) return false;
+	int sum = 0;
 	
 	for(auto i = r.begin(); i != r.end(); i++)
 	{
 		int x = i->first;
 		int y = i->second;
 		int z = s[x];
-		if(abs(y-z) > tau) return false;
+		sum += y-z;
+		if(sum > tau || -sum > tau) return false;
 	}
 	
-	
+	sum = 0;
 	for(auto i = mp1.begin(); i != mp1.end(); i++)
 	{
 		auto pr = i->first;
@@ -44,11 +47,40 @@ bool ged_filtering( const unsigned p, const unsigned q )
 			if(mp2.count(pr))
 			{
 				if( abs(mp1[pr]-mp2[pr]) > tau) return false;
+				sum += abs(mp1[pr]-mp2[pr]);
+				if(sum > tau) 
+				{
+					return false;
+					continue;
+				}
 			}
 			else if(mp1[pr] > tau) return false;
 		}
-		else if( ( (s.count(u) && !s.count(v)) || (!s.count(u) && s.count(v)) ) && (mp1[pr] > tau) ) return false;
-		else if(mp1[pr] > tau-1) return false;
+		else if( (s.count(u) && !s.count(v)) || (!s.count(u) && s.count(v)) )
+		{
+			if(mp1[pr] > tau) return false;
+			/*sum += mp1[pr];
+			
+			if(sum > tau) 
+			{
+				return false;
+				continue;
+			}
+			*/
+		} 
+		else 
+		{
+			if(mp1[pr] > tau-1) return false;
+			/*sum += mp1[pr];
+			
+			if(sum > tau) 
+			{
+				return false;
+				continue;
+			}
+			*/
+		}
+
 	}
 
 	return true;

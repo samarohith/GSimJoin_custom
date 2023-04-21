@@ -1,6 +1,7 @@
 #include "common.h"
 #include "path_join.h"
 #include "path_search.h"
+#include<bits/stdc++.h>
 
 // setting variables
 char vf_order = '1', version = '0';
@@ -9,6 +10,7 @@ bool filter_only = false, print_ans = false, print_more = false;
 
 // trivial data structure
 int tau = 2, over_tau = 3, qs = 5, path_qs = 9, under_qs = 4;
+int a_count = 0, b_count = 0, c_count = 0;
 unsigned max_vnum;
 bool* done;
 
@@ -62,6 +64,10 @@ void usage() {
 		<< "-m0 -o1 -t3 [gdb] 4 2\n\n"
 		<< "Report bugs to <xiangzhao@nudt.edu.cn>." << endl;
 	exit(0);
+}
+unsigned long long int clocksTosec(chrono::high_resolution_clock::time_point start, chrono::high_resolution_clock::time_point end)
+{
+	return (unsigned long long int)(1e-6*chrono::duration_cast<chrono::nanoseconds>(end - start).count());
 }
 
 void parse_data(char* file) {
@@ -193,6 +199,7 @@ void clean() {
 
 int main(int argc, char** argv)
 {
+	chrono::high_resolution_clock::time_point cl0 = chrono::high_resolution_clock::now();
 	if (argc == 1) usage();
 	if (argc < 2) {
 		cerr << "Mandatory argument missing!\n" << endl;
@@ -358,5 +365,11 @@ int main(int argc, char** argv)
 	}
 
 	clean();
+	cout<<"a_count : "<<a_count<<endl;
+	cout<<"b_count : "<<b_count<<endl;
+	cout<<"c_count : "<<c_count<<endl;
+	chrono::high_resolution_clock::time_point cl1 = chrono::high_resolution_clock::now();
+	double postfixTimeTaken = (clocksTosec(cl0,cl1));
+	cout<<"Time taken is "<<postfixTimeTaken<<" secs"<<endl;
 	return 0;
 }

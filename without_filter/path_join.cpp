@@ -538,11 +538,14 @@ void opt_order_join( void )
 						} else break;
 					}
 					if (size_filtering(*ip, i)) {
+						++a_count;
 						++ cand;
 						if (label_filtering(*ip, i)) {
+							++b_count;
 							pri = content_filtering(*ip, i);
 							if (pri != NULL) {
 								++ dist_cand;
+								++c_count;
 								compute_rud_dist(pri, ans, filter_only);
 							}
 							delete pri;
@@ -567,10 +570,13 @@ void opt_order_join( void )
 						}
 
 						if (size_filtering(*ip, i)) {
+							++a_count;
 							++ cand;
 							if (label_filtering(*ip, i)) {
+								++b_count;
 								pri = content_filtering(*ip, i);
 								if (pri != NULL) {
+									++c_count;
 									++ dist_cand;
 									compute_rud_dist(pri, ans, filter_only);
 								}
@@ -604,8 +610,10 @@ void opt_order_join( void )
 			}
 
 			if (size_filtering(uid[j], uid[i])) {
+				++a_count;
 				++ cand;
 				if (label_filtering(uid[j], uid[i])) {
+					++b_count;
 					if (gdb[uid[j]].path_num == 0 && gdb[uid[i]].path_num == 0) {
 						++ dist_cand;
 						pri = new Priority(uid[i], uid[j]);	
@@ -614,6 +622,7 @@ void opt_order_join( void )
 					} else {
 						pri = content_filtering(uid[j], uid[i]);
 						if (pri != NULL) {
+							++c_count;
 							++ dist_cand;
 							compute_rud_dist(pri, ans, filter_only);
 						}

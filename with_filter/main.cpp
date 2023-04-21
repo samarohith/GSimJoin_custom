@@ -64,6 +64,11 @@ void usage() {
 	exit(0);
 }
 
+unsigned long long int clocksTosec(chrono::high_resolution_clock::time_point start, chrono::high_resolution_clock::time_point end)
+{
+	return (unsigned long long int)(1e-6*chrono::duration_cast<chrono::nanoseconds>(end - start).count());
+}
+
 void parse_data(char* file) {
 	ifstream fin(file, ifstream::in);
 	if (!fin) {
@@ -193,6 +198,7 @@ void clean() {
 
 int main(int argc, char** argv)
 {
+	chrono::high_resolution_clock::time_point cl0 = chrono::high_resolution_clock::now();
 	if (argc == 1) usage();
 	if (argc < 2) {
 		cerr << "Mandatory argument missing!\n" << endl;
@@ -357,5 +363,8 @@ int main(int argc, char** argv)
 	}
 
 	clean();
+	chrono::high_resolution_clock::time_point cl1 = chrono::high_resolution_clock::now();
+	double postfixTimeTaken = (clocksTosec(cl0,cl1));
+	cout<<"Time taken is "<<postfixTimeTaken<<" secs"<<endl;
 	return 0;
 }

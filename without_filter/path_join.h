@@ -59,3 +59,6 @@ extern Freq_comp fcomp;
 extern bool count_filter, min_edit_filter, local_lab_filter, deg_match_cond, filter_only;
 extern char vf_order, version;
 extern unsigned max_vnum;
+extern int a_count;
+extern int b_count;
+extern int c_count;
