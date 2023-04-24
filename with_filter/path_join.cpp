@@ -540,6 +540,7 @@ void opt_order_join( void )
 					}
 					if (ged_filtering(*ip, i)) 
 					{
+						if(label_filtering(*ip, i))
 						fout<<i<<" "<<*ip<<endl;
 						//cout<<i<<" "<<*ip<<endl;
 					}
@@ -563,6 +564,7 @@ void opt_order_join( void )
 
 						if (ged_filtering(*ip, i)) 
 						{
+							if(label_filtering(*ip, i))
 							fout<<i<<" "<<*ip<<endl;
 						}
 					}

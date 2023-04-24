@@ -126,6 +126,7 @@ bool label_filtering( const unsigned p, const unsigned q )
 	return (v_err + e_err <= tau);
 }
 
+
 bool count_filtering( const unsigned p, const unsigned q )
 {
 	unsigned i = 0, j = 0;
