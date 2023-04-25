@@ -62,3 +62,4 @@ extern unsigned max_vnum;
 extern int a_count;
 extern int b_count;
 extern int c_count;
+extern int d_count;

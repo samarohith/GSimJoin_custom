@@ -16,6 +16,34 @@ bool size_filtering( const unsigned p, const unsigned q )
 		return false;
 }
 
+bool custom_filtering(const unsigned p, const unsigned q )
+{
+	auto p_edge = gdb[p].edge_pair;
+	auto q_edge = gdb[q].edge_pair;
+	int r = 0, s = 0, sum = 0;
+
+	while(r < p_edge.size() && s < q_edge.size())
+	{
+		if(p_edge[r].first == q_edge[s].first)
+		{
+			if(p_edge[r].second == q_edge[s].second)
+			{
+				r++;
+				s++;
+				continue;
+			}
+			else if(p_edge[r].second < q_edge[s].second) r++;
+			else s++;			
+		}
+		else if(p_edge[r].first < q_edge[s].first) r++;
+		else s++;
+		sum++;
+		if(sum > tau) return false;
+	}
+	return true;
+}
+
+
 bool label_filtering( const unsigned p, const unsigned q )
 {
 	int v_err = 0, m = vlab[p].size(), n = vlab[q].size(), overlap = 0;

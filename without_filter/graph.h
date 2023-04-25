@@ -62,6 +62,7 @@ public:
 	int* vlabel_list;
 	int* elabel_list;
 	int* vid_to_vlabel;
+	vector<pair<int,int>> edge_pair;
 	vector<int>* eid_to_elabel;
 };
 
