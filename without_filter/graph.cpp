@@ -1,5 +1,10 @@
 #include "graph.h"
 
+static bool comp(pair<int,int> p1, pair<int,int> p2)
+{
+	if(p1.first == p2.first) return p1.second <= p2.second;
+	return p1.first < p2.first;
+}
 
 void Vertex::push_edge( unsigned eid, unsigned from, unsigned to, int elabel )
 {
@@ -42,6 +47,8 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 			(*this)[i].push_edge(cnt, i, j, k);
 			(*this)[j].push_edge(cnt, j, i, k);
 			edge_label.insert(k);
+			if(i < j) edge_pair.push_back({i,j});
+			else edge_pair.push_back({j,i});
 			++ cnt;
 		} else {
 			cerr << "a possible erroneous entry at graph " << this->name << "!" << endl;
@@ -99,6 +106,7 @@ char Graph::read( istream& is, char prev_tag )
 	}
 	edge_num = cnt;
 	total_num = vertex_num + edge_num;
+	sort(edge_pair.begin(), edge_pair.end(), comp);
 	sort_edge();
 
 	return tag;

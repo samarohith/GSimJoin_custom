@@ -4,6 +4,7 @@
 
 
 bool size_filtering(const unsigned p, const unsigned q);
+bool custom_filtering(const unsigned p, const unsigned q);
 bool label_filtering(const unsigned p, const unsigned q);
 bool count_filtering(const unsigned p, const unsigned q);
 bool tight_deg_filtering(unsigned p, unsigned q, const int threshold);
