@@ -10,7 +10,7 @@ bool filter_only = false, print_ans = false, print_more = false;
 
 // trivial data structure
 int tau = 2, over_tau = 3, qs = 5, path_qs = 9, under_qs = 4;
-int a_count = 0, b_count = 0, c_count = 0;
+int a_count = 0, b_count = 0, c_count = 0, d_count = 0;
 unsigned max_vnum;
 bool* done;
 
@@ -366,8 +366,10 @@ int main(int argc, char** argv)
 
 	clean();
 	cout<<"a_count : "<<a_count<<endl;
+	cout<<"d_count : "<<d_count<<endl;
 	cout<<"b_count : "<<b_count<<endl;
 	cout<<"c_count : "<<c_count<<endl;
+
 	chrono::high_resolution_clock::time_point cl1 = chrono::high_resolution_clock::now();
 	double postfixTimeTaken = (clocksTosec(cl0,cl1));
 	cout<<"Time taken is "<<postfixTimeTaken<<" secs"<<endl;

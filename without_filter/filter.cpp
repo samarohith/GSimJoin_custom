@@ -18,6 +18,7 @@ bool size_filtering( const unsigned p, const unsigned q )
 
 bool custom_filtering(const unsigned p, const unsigned q )
 {
+	//return true;
 	auto p_edge = gdb[p].edge_pair;
 	auto q_edge = gdb[q].edge_pair;
 	int r = 0, s = 0, sum = 0;
@@ -38,7 +39,7 @@ bool custom_filtering(const unsigned p, const unsigned q )
 		else if(p_edge[r].first < q_edge[s].first) r++;
 		else s++;
 		sum++;
-		if(sum > tau) return false;
+		if(sum > tau+10) return false;
 	}
 	return true;
 }
@@ -74,8 +75,10 @@ bool label_filtering( const unsigned p, const unsigned q )
 			++ s, ++ t;
 		} else if (elab[p][s] < elab[q][t]) {
 			++ s;
+			cout<<"hey"<<endl;
 		} else {
 			++ t;
+			cout<<"hi"<<endl;
 		}
 	}
 
