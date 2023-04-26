@@ -6,7 +6,7 @@ int main(int argc, char const *argv[])
 {
 	string dataset_name = argv[1];
 	string fname1 = dataset_name + "/result.txt";
-	string fname2 = dataset_name + "/result2.txt";
+	string fname2 = dataset_name + "/2.txt";
 
 	cout<<"dataset is "<<dataset_name<<endl;
 	int size1 = 0, size2 = 0;
@@ -43,6 +43,7 @@ int main(int argc, char const *argv[])
         {
             tokens.push_back(temp);
         }
+        if(stoi(tokens[2]) > 1) continue;
         size2++;
         auto vec = mp[stoi(tokens[0])];
         if(find(vec.begin(), vec.end(), stoi(tokens[1])) != vec.end())
