@@ -26,7 +26,7 @@ bool custom_filtering(const unsigned p, const unsigned q )
 	//return true;
 	auto p_edge = gdb[p].edge_pair;
 	auto q_edge = gdb[q].edge_pair;
-	sort(p_edge.begin(), p_edge.end(), sorted);   //sort it while reading the graph itself
+	sort(p_edge.begin(), p_edge.end(), sorted);
 	sort(q_edge.begin(), q_edge.end(), sorted);
 	int r = 0, s = 0, sum = 0;
 	int thr = 0;
