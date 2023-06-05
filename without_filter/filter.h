@@ -4,6 +4,7 @@
 
 
 bool size_filtering(const unsigned p, const unsigned q);
+static bool sorted(pair<int,int>, pair<int,int>);
 bool custom_filtering(const unsigned p, const unsigned q);
 bool label_filtering(const unsigned p, const unsigned q);
 bool count_filtering(const unsigned p, const unsigned q);

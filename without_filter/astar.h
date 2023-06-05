@@ -179,13 +179,15 @@ inline void compute_rud_dist( Priority* pri, int& ans, bool filter_only = false 
 		//outfile << pri->lgid << "(" << pri->lg->name << ") - " << pri->rgid << "(" << pri->rg->name << ") " << edist << " #" << nodes_expanded << endl;
 	if (edist != OVER_BOUND) {
 		++ ans;
+		
 		if (!print_more & print_ans)
 			cout << pri->lgid << "(" << pri->lg->name << ") - " << pri->rgid << "(" << pri->rg->name << ") " << edist << " #" << nodes_expanded << endl;
-			//outfile << pri->lgid << "(" << pri->lg->name << ") - " << pri->rgid << "(" << pri->rg->name << ") " << edist << " #" << nodes_expanded << endl;
-			//cout<<"hello"<<endl;
+			outfile << pri->lgid << "(" << pri->lg->name << ") - " << pri->rgid << "(" << pri->rg->name << ") " << edist << " #" << nodes_expanded << endl;
+			cout<<"hello"<<endl;
 			outfile << pri->lg->name << " " << pri->rg->name << " " << edist << endl;
 	}
 	*/
+	
 	pri->roll_back();
 	v_time.pause();
 }

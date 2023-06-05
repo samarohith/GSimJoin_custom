@@ -47,7 +47,7 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 			(*this)[i].push_edge(cnt, i, j, k);
 			(*this)[j].push_edge(cnt, j, i, k);
 			edge_label.insert(k);
-			if(i < j) edge_pair.push_back({i,j});
+			if(i <= j) edge_pair.push_back({i,j});
 			else edge_pair.push_back({j,i});
 			++ cnt;
 		} else {
@@ -59,7 +59,9 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 	vertex_num = this->size();
 	for (unsigned i = 0; i != vertex_num; ++ i) {
 		(*this)[i].degree = (*this)[i].edges.size();
+		dg.push_back((*this)[i].degree);
 	}
+	sort(dg.begin(),dg.end());
 	edge_num = cnt;
 	total_num = vertex_num + edge_num;
 	sort_edge();

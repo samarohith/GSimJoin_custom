@@ -15,19 +15,42 @@ bool size_filtering( const unsigned p, const unsigned q )
 	} else 
 		return false;
 }
+static bool sorted(pair<int,int> p1, pair<int,int> p2)
+{
+	if(p1.first == p2.first) return p1.second < p2.second;
+	return p1.first < p2.first;
+}
 
 bool custom_filtering(const unsigned p, const unsigned q )
 {
 	//return true;
 	auto p_edge = gdb[p].edge_pair;
 	auto q_edge = gdb[q].edge_pair;
+	sort(p_edge.begin(), p_edge.end(), sorted);   //sort it while reading the graph itself
+	sort(q_edge.begin(), q_edge.end(), sorted);
 	int r = 0, s = 0, sum = 0;
-
+	int thr = 0;
 	while(r < p_edge.size() && s < q_edge.size())
 	{
+		
 		if(p_edge[r].first != q_edge[s].first && p_edge[r].first != q_edge[s].second)
+		{
 			if(p_edge[r].second != q_edge[s].first && p_edge[r].second != q_edge[s].second)
-				return false;
+			{
+				auto p_dg = gdb[p].dg;
+				auto q_dg = gdb[q].dg;
+				int i = 0, j = 0;
+				if(p_dg.size() == q_dg.size())
+				{
+					while(thr <= tau)
+					{
+						if(p_dg[i++] != q_dg[j++]) return false;
+					}
+				}
+				//else return false;
+			}
+		}
+
 		if(p_edge[r].first == q_edge[s].first)
 		{
 			if(p_edge[r].second == q_edge[s].second)

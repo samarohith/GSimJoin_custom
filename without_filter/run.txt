@@ -6,4 +6,4 @@ g++ filter.cpp  astar.cpp graph.cpp path_join.cpp path_search.cpp set_cover.cpp 
 
 
 Run
-./gsim -m0 -o1 -t2 protein.db 2 1
+./gsim -m0 -o1 -t2 aids.txt 2 1
