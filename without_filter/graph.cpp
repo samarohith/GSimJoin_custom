@@ -16,6 +16,13 @@ void Vertex::push_edge( unsigned eid, unsigned from, unsigned to, int elabel )
 	edges[n].elabel = elabel;
 }
 
+static bool sorted(pair<int,int> p1, pair<int,int> p2)
+{
+	if(p1.first == p2.first) return p1.second < p2.second;
+	return p1.first < p2.first;
+}
+
+
 char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 {
 	char tag = prev_tag;
@@ -47,8 +54,14 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 			(*this)[i].push_edge(cnt, i, j, k);
 			(*this)[j].push_edge(cnt, j, i, k);
 			edge_label.insert(k);
-			if(i <= j) edge_pair.push_back({i,j});
-			else edge_pair.push_back({j,i});
+			//if(i <= j) edge_pair.push_back({i,j});
+			//else edge_pair.push_back({j,i});
+
+			int a = (*this)[i].vlabel, b = (*this)[j].vlabel;
+			if(a <= b) type_edge.push_back({a,b});
+			else type_edge.push_back({b,a});
+			sort(type_edge.begin(), type_edge.end(), sorted);
+			
 			++ cnt;
 		} else {
 			cerr << "a possible erroneous entry at graph " << this->name << "!" << endl;
@@ -57,11 +70,31 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 	}
 
 	vertex_num = this->size();
+	
+	int index = 0;
 	for (unsigned i = 0; i != vertex_num; ++ i) {
 		(*this)[i].degree = (*this)[i].edges.size();
-		dg.push_back((*this)[i].degree);
+		//dg.push_back((*this)[i].degree);
+		int lb = (*this)[i].vlabel;
+		if(label_to_ind.count(lb) == 0) 
+		{
+			deg_freq.resize(index+1);
+			label_to_ind[lb] = index++;
+			ind_to_label.push_back(lb);
+		}
+		int ind = label_to_ind[lb];
+		deg_freq[ind].push_back((*this)[i].degree);
 	}
-	sort(dg.begin(),dg.end());
+	for(int i = 0; i < deg_freq.size(); i++)
+	{
+		//cout<<ind_to_label[i]<<" :- ";
+		sort(deg_freq[i].begin(), deg_freq[i].end(), greater<int>());
+		for(int j = 0; j < deg_freq[i].size(); j++)
+			cout<<deg_freq[i][j]<<" ";
+		//cout<<endl;
+	}
+
+	//sort(dg.begin(),dg.end());
 	edge_num = cnt;
 	total_num = vertex_num + edge_num;
 	sort_edge();

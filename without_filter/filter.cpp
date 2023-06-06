@@ -29,7 +29,7 @@ bool custom_filtering(const unsigned p, const unsigned q )
 	sort(p_edge.begin(), p_edge.end(), sorted);   //sort it while reading the graph itself
 	sort(q_edge.begin(), q_edge.end(), sorted);
 	int r = 0, s = 0, sum = 0;
-	int thr = 0;
+
 	while(r < p_edge.size() && s < q_edge.size())
 	{
 		
@@ -37,17 +37,10 @@ bool custom_filtering(const unsigned p, const unsigned q )
 		{
 			if(p_edge[r].second != q_edge[s].first && p_edge[r].second != q_edge[s].second)
 			{
-				auto p_dg = gdb[p].dg;
-				auto q_dg = gdb[q].dg;
-				int i = 0, j = 0;
-				if(p_dg.size() == q_dg.size())
+				if(gdb[p].dg.size() == gdb[q].dg.size())
 				{
-					while(thr <= tau)
-					{
-						if(p_dg[i++] != q_dg[j++]) return false;
-					}
+					 return false;
 				}
-				//else return false;
 			}
 		}
 
@@ -70,6 +63,56 @@ bool custom_filtering(const unsigned p, const unsigned q )
 	return true;
 }
 
+bool new_filtering(const unsigned p, const unsigned q )
+{
+	auto p_edge = gdb[p].type_edge;
+	auto q_edge = gdb[q].type_edge;
+
+	vector<pair<int,int>> p_rem, q_rem;
+	int r = 0, s = 0;
+
+	while(r < p_edge.size() && s < q_edge.size())
+	{
+		//cout<<p_edge[r].first <<" "<<p_edge[r].second<<" "<<q_edge[s].first<<" "<<q_edge[s].second <<endl;
+		if(p_edge[r].first == q_edge[s].first)
+		{
+			if(p_edge[r].second == q_edge[s].second)
+			{
+				r++;
+				s++;
+				continue;
+			}
+			else if(p_edge[r].second < q_edge[s].second)
+			{ 
+				p_rem.push_back(p_edge[r]);
+				//cout<<"p "<<p_edge[r].first<<" "<<p_edge[r].second<<endl;
+				r++;
+			}
+			else
+			{ 	
+				q_rem.push_back(q_edge[s]);	
+				//cout<<"q "<<q_edge[s].first<<" "<<q_edge[s].second<<endl;
+				s++;	
+			}
+		}
+		else if(p_edge[r].first < q_edge[s].first)
+		{ 
+			p_rem.push_back(p_edge[r]);
+			//cout<<"p "<<p_edge[r].first<<" "<<p_edge[r].second<<endl;
+			r++;
+		}
+		else
+		{ 		
+			q_rem.push_back(q_edge[s]);	
+			//cout<<"q "<<q_edge[s].first<<" "<<q_edge[s].second<<endl;
+			s++;
+		}
+	}
+	while(r < p_edge.size()) p_rem.push_back(p_edge[r++]);
+	while(s < q_edge.size()) q_rem.push_back(q_edge[s++]);
+
+	return true;
+}
 
 bool label_filtering( const unsigned p, const unsigned q )
 {

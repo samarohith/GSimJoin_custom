@@ -1,6 +1,7 @@
 #pragma once
 
 #include "misc.h"
+#include <unordered_map>
 
 
 class Edge
@@ -63,6 +64,10 @@ public:
 	int* elabel_list;
 	int* vid_to_vlabel;
 	vector<unsigned> dg;
+	vector<pair<int,int>>type_edge;
+	vector<vector<int>> deg_freq;
+	unordered_map<int,int> label_to_ind;
+	vector<int> ind_to_label;
 	vector<pair<int,int>> edge_pair;
 	vector<int>* eid_to_elabel;
 };
