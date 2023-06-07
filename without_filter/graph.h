@@ -63,7 +63,6 @@ public:
 	int* vlabel_list;
 	int* elabel_list;
 	int* vid_to_vlabel;
-	vector<unsigned> dg;
 	vector<pair<int,int>>type_edge;
 	vector<vector<int>> deg_freq;
 	unordered_map<int,int> label_to_ind;

@@ -1,6 +1,7 @@
 #include "filter.h"
 #include "set_cover.h"
 #include "misc.h"
+#include<bits/stdc++.h>
 
 extern int max_err;
 
@@ -23,7 +24,6 @@ static bool sorted(pair<int,int> p1, pair<int,int> p2)
 
 bool custom_filtering(const unsigned p, const unsigned q )
 {
-	//return true;
 	auto p_edge = gdb[p].edge_pair;
 	auto q_edge = gdb[q].edge_pair;
 	sort(p_edge.begin(), p_edge.end(), sorted);   //sort it while reading the graph itself
@@ -37,7 +37,7 @@ bool custom_filtering(const unsigned p, const unsigned q )
 		{
 			if(p_edge[r].second != q_edge[s].first && p_edge[r].second != q_edge[s].second)
 			{
-				if(gdb[p].dg.size() == gdb[q].dg.size())
+				if(gdb[p].vertex_num == gdb[q].vertex_num)
 				{
 					 return false;
 				}
@@ -70,6 +70,7 @@ bool new_filtering(const unsigned p, const unsigned q )
 
 	vector<pair<int,int>> p_rem, q_rem;
 	int r = 0, s = 0;
+	unordered_set<int> p_set, q_set;
 
 	while(r < p_edge.size() && s < q_edge.size())
 	{
@@ -84,26 +85,34 @@ bool new_filtering(const unsigned p, const unsigned q )
 			}
 			else if(p_edge[r].second < q_edge[s].second)
 			{ 
-				p_rem.push_back(p_edge[r]);
+				//p_rem.push_back(p_edge[r]);
+				p_set.insert(p_edge[r].first);
+				p_set.insert(p_edge[r].second);
 				//cout<<"p "<<p_edge[r].first<<" "<<p_edge[r].second<<endl;
 				r++;
 			}
 			else
 			{ 	
-				q_rem.push_back(q_edge[s]);	
+				//q_rem.push_back(q_edge[s]);
+				q_set.insert(q_edge[s].first);
+				q_set.insert(q_edge[s].second);
 				//cout<<"q "<<q_edge[s].first<<" "<<q_edge[s].second<<endl;
-				s++;	
+				s++;
 			}
 		}
 		else if(p_edge[r].first < q_edge[s].first)
 		{ 
-			p_rem.push_back(p_edge[r]);
+			//p_rem.push_back(p_edge[r]);
+			p_set.insert(p_edge[r].first);
+			p_set.insert(p_edge[r].second);
 			//cout<<"p "<<p_edge[r].first<<" "<<p_edge[r].second<<endl;
 			r++;
 		}
 		else
 		{ 		
-			q_rem.push_back(q_edge[s]);	
+			//q_rem.push_back(q_edge[s]);	
+			q_set.insert(q_edge[s].first);
+			q_set.insert(q_edge[s].second);
 			//cout<<"q "<<q_edge[s].first<<" "<<q_edge[s].second<<endl;
 			s++;
 		}
@@ -111,6 +120,29 @@ bool new_filtering(const unsigned p, const unsigned q )
 	while(r < p_edge.size()) p_rem.push_back(p_edge[r++]);
 	while(s < q_edge.size()) q_rem.push_back(q_edge[s++]);
 
+	auto p_deg = gdb[p].deg_freq;
+	auto q_deg = gdb[q].deg_freq;
+	int thr1 = 0, thr2 = 0;
+	
+	for(auto it = q_set.begin(); it != q_set.end(); it++)
+	{
+		auto mp = gdb[p].label_to_ind;
+		if(mp.count(*it) == 0) continue;
+		int ind1 = mp[*it];
+		int ind2 = gdb[q].label_to_ind[*it];
+		if(gdb[q].deg_freq[ind2][0] - gdb[p].deg_freq[ind1][0] > 0) thr1++;
+	}
+	
+	for(auto it = p_set.begin(); it != p_set.end(); it++)
+	{
+		auto mp = gdb[q].label_to_ind;
+		if(mp.count(*it) == 0) continue;
+		int ind1 = mp[*it];
+		int ind2 = gdb[p].label_to_ind[*it];
+		if(gdb[p].deg_freq[ind2][0] - gdb[q].deg_freq[ind1][0] > 0) thr2++;
+	}
+	if(min(thr1, thr2) > tau) return false;
+	
 	return true;
 }
 

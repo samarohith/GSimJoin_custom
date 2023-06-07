@@ -621,7 +621,7 @@ void opt_order_join( void )
 
 			if (size_filtering(uid[j], uid[i])) {
 				++a_count;
-				if(new_filtering(*ip, i))
+				if(custom_filtering(*ip, i))
 				{
 					++d_count;
 					++ cand;

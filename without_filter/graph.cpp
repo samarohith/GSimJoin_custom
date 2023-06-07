@@ -70,11 +70,10 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 	}
 
 	vertex_num = this->size();
-	
+
 	int index = 0;
 	for (unsigned i = 0; i != vertex_num; ++ i) {
 		(*this)[i].degree = (*this)[i].edges.size();
-		//dg.push_back((*this)[i].degree);
 		int lb = (*this)[i].vlabel;
 		if(label_to_ind.count(lb) == 0) 
 		{
@@ -89,12 +88,10 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 	{
 		//cout<<ind_to_label[i]<<" :- ";
 		sort(deg_freq[i].begin(), deg_freq[i].end(), greater<int>());
-		for(int j = 0; j < deg_freq[i].size(); j++)
-			cout<<deg_freq[i][j]<<" ";
+		//for(int j = 0; j < deg_freq[i].size(); j++)
+			//cout<<deg_freq[i][j]<<" ";
 		//cout<<endl;
 	}
-
-	//sort(dg.begin(),dg.end());
 	edge_num = cnt;
 	total_num = vertex_num + edge_num;
 	sort_edge();
